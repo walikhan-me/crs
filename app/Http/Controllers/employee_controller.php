@@ -61,6 +61,17 @@ class employee_controller extends Controller
     }
 
     public function viewemployee(){
-        return view('/Employee Management/Add Employees/viewemployee');
+        $employess =  DB::table('employees')
+        ->join('designations','employees.designation_id', '=', 'designations.designation_id')
+        ->join('departments','employees.department_id', '=', 'departments.department_id')
+        ->select('designations.designation_name', 'departments.department_name', 'employees.employee_name', 'employees.email', 'employees.user_name', 'employees.mobile','employees.emp_id')
+        ->where('employees.status',1)
+        ->get();
+        return view('/Employee Management/Add Employees/viewemployee',['emplyess_data' =>$employess]);
+    }
+    public function editemployee($id){
+
+        $Employee = Employee::where('emp_id', $id)->first();
+        return view('Employee Management.Add Employees.editemployee', ['editemployee' => $Employee]);
     }
 }

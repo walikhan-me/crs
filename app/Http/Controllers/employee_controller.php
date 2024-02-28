@@ -70,8 +70,55 @@ class employee_controller extends Controller
         return view('/Employee Management/Add Employees/viewemployee',['emplyess_data' =>$employess]);
     }
     public function editemployee($id){
-
+       
         $Employee = Employee::where('emp_id', $id)->first();
         return view('Employee Management.Add Employees.editemployee', ['editemployee' => $Employee]);
     }
+    public function editinemployee(Request $request){
+        
+        $validatedData = $request->validate([
+            'emp_id' => 'required|integer',
+            'edit_employee_name' => 'required|string|max:255',
+            'edit_email' => 'required|string|max:255',
+            'edit_username' => 'required|string|max:255',
+            'edit_password' => 'required|string|max:255',
+            'edit_mobile' => 'required|string|max:255',
+            'edit_department_name' => 'required|integer',
+            'edit_designation_name' => 'required|integer',
+           
+        ]);
+        // echo'<pre>';
+        // print_r($request->all());
+        // die();
+        
+        $Employee = Employee::find($request->emp_id);
+
+        if (!$Employee) {
+            return redirect()->back()->with('error', 'Employee not found');
+        }
+        $Employee->employee_name = $request->edit_employee_name;
+        $Employee->email = $request->edit_email;
+        $Employee->user_name = $request->edit_username;
+        $Employee->password = $request->edit_password;
+        $Employee->mobile = $request->edit_mobile;
+        $Employee->department_id = $request->edit_department_name;
+        $Employee->designation_id = $request->edit_designation_name;
+
+        $Employee->status = 1;
+        $Employee->save();
+        return redirect()->route('viewemployee')->with('success', 'Employee updated successfully');
+    }
+
+    public function deleteemployee($id)
+    { 
+       
+        $Employee = Employee::find($id);
+        if (!$Employee) {
+            return redirect()->route('viewemployee')->with('error', 'Employee not found');
+        }
+        $Employee->status = 0;
+        $Employee->save();
+        return redirect()->route('viewemployee')->with('success', 'Employee set as inactive successfully');
+    }
+    
 }

@@ -22,69 +22,85 @@
           <h3 class="card-title ">Edit Employee</h3>
           <form class="row g-3" enctype="multipart/form-data"  method='POST'  action='/editinemployee'>
              @csrf  
-                <input type="hidden" class="form-control" name="edit_designation_id" value="{{editemployee->emp_id}}">
+                <input type="hidden" class="form-control" name="emp_id" value="{{$editemployee->emp_id}}">
                
 
                 <div class="col-8  ">
-                  <label for="department_name" class="form-label">Edit Designation</label>
-                  <input type="text" class="form-control" name="edit_designation_name" value="{{editemployee->emp_id}}">
+                  <label for="department_name" class="form-label">Edit Employee Name</label>
+                  <input type="text" class="form-control" name="edit_employee_name" value="{{$editemployee->employee_name}}">
                   
-                  @if ($errors->has('department_name'))
+                  @if ($errors->has('edit_employee_name'))
                       <span style='color:red'>
-                          {{ $errors->first('department_name') }}
+                          {{ $errors->first('edit_employee_name') }}
+                      </span>
+                  @endif
+                </div>
+               
+                <div class="col-8  ">
+                  <label for="department_name" class="form-label">Edit Email</label>
+                  <input type="text" class="form-control" name="edit_email" value="{{$editemployee->email}}">
+                  
+                  @if ($errors->has('edit_email'))
+                      <span style='color:red'>
+                          {{ $errors->first('edit_email') }}
+                      </span>
+                  @endif
+                </div>
+
+                <div class="col-8  ">
+                  <label for="department_name" class="form-label">Edit Username</label>
+                  <input type="text" class="form-control" name="edit_username" value="{{$editemployee->user_name}}">
+                  
+                  @if ($errors->has('edit_username'))
+                      <span style='color:red'>
+                          {{ $errors->first('edit_username') }}
                       </span>
                   @endif
                 </div>
                 <div class="col-8  ">
-                  <label for="department_name" class="form-label">Edit Designation</label>
-                  <input type="text" class="form-control" name="edit_designation_name" value="{{editemployee->emp_id}}">
+                  <label for="department_name" class="form-label">Password</label>
+                  <input type="text" class="form-control" name="edit_password" value="{{$editemployee->password}}">
                   
-                  @if ($errors->has('department_name'))
+                  @if ($errors->has('edit_password'))
                       <span style='color:red'>
-                          {{ $errors->first('department_name') }}
+                          {{ $errors->first('edit_password') }}
                       </span>
                   @endif
                 </div>
+                <div class="col-8">
+                  <label for="department_name" class="form-label">Edit Mobile</label>
+                  <input type="text" class="form-control" name="edit_mobile" value="{{$editemployee->mobile}}">
+                  
+                  @if ($errors->has('edit_mobile'))
+                      <span style='color:red'>
+                          {{ $errors->first('edit_mobile') }}
+                      </span>
+                  @endif
+                </div>
+                
+                <div class="col-8  ">
+                  <label for="department_name" class="form-label">Edit Department</label>
+                  <input type="text" class="form-control" name="edit_department_name" value="{{$editemployee->department_id}}">
+                  
+                  @if ($errors->has('edit_department_name'))
+                      <span style='color:red'>
+                          {{ $errors->first('edit_department_name') }}
+                      </span>
+                  @endif
+                </div>
+
                 <div class="col-8  ">
                   <label for="department_name" class="form-label">Edit Designation</label>
-                  <input type="text" class="form-control" name="edit_designation_name" value="{{editemployee->emp_id}}">
+                  <input type="text" class="form-control" name="edit_designation_name" value="{{$editemployee->designation_id}}">
                   
-                  @if ($errors->has('department_name'))
+                  @if ($errors->has('edit_designation_name'))
                       <span style='color:red'>
-                          {{ $errors->first('department_name') }}
+                          {{ $errors->first('edit_designation_name') }}
                       </span>
                   @endif
                 </div>
-                <div class="col-8  ">
-                  <label for="department_name" class="form-label">Edit Designation</label>
-                  <input type="text" class="form-control" name="edit_designation_name" value="{{editemployee->emp_id}}">
-                  
-                  @if ($errors->has('department_name'))
-                      <span style='color:red'>
-                          {{ $errors->first('department_name') }}
-                      </span>
-                  @endif
-                </div>
-                <div class="col-8  ">
-                  <label for="department_name" class="form-label">Edit Designation</label>
-                  <input type="text" class="form-control" name="edit_designation_name" value="{{editemployee->emp_id}}">
-                  
-                  @if ($errors->has('department_name'))
-                      <span style='color:red'>
-                          {{ $errors->first('department_name') }}
-                      </span>
-                  @endif
-                </div>
-                <div class="col-8  ">
-                  <label for="department_name" class="form-label">Edit Designation</label>
-                  <input type="text" class="form-control" name="edit_designation_name" value="{{editemployee->emp_id}}">
-                  
-                  @if ($errors->has('department_name'))
-                      <span style='color:red'>
-                          {{ $errors->first('department_name') }}
-                      </span>
-                  @endif
-                </div>
+
+              
                
               
                 <div class="col-12 ">
@@ -93,7 +109,7 @@
                 </div>
           </form>
           <div class="fields_success_message" style="display: none; color: green;">
-              Department updated successfully!
+              Employee updated successfully!
           </div>
            
         </div>

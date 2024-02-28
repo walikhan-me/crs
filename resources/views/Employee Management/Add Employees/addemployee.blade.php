@@ -29,7 +29,7 @@
 
           <form class="row g-3" enctype="multipart/form-data"  method='POST'  action='/create_employee'>
              @csrf  
-                <div class="col-8   ">
+                <div class="col-8 ">
                   <label for="department_name" class="form-label">Employee Name</label>
                   <input type="text" class="form-control" name="employee_name">
                   @if ($errors->has('employee_name'))
@@ -39,7 +39,7 @@
                   @endif
                 </div>
 
-                <div class="col-8   ">
+                <div class="col-8 ">
                   <label for="user_name" class="form-label">User Name</label>
                   <input type="text" class="form-control" name="user_name">
                   @if ($errors->has('user_name'))

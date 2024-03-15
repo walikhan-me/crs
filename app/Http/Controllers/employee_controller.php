@@ -5,11 +5,30 @@ use App\Models\Department;
 use App\Models\Designation;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\bookedconfrenceroom;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class employee_controller extends Controller
 {
+
+    public function welcome(){
+        $currentDate = date('Y-m-d'); // Get current date in 'Y-m-d' format
+        $currentTime = date('H:i:s'); // Get current time in 'H:i:s' format
+
+        $query = bookedconfrenceroom::where(function ($query) use ($currentDate, $currentTime) {
+            $query->where('end_date', '>', $currentDate)
+                ->orWhere(function ($query) use ($currentDate, $currentTime) {
+                    $query->where('end_date', '=', $currentDate)
+                        ->where('end_time', '>', $currentTime);
+                });
+        });
+              
+            //    die();              
+                                    
+
+    return view('welcome',['upcomingMeetings'=>$query]);
+        
+    }
    
     public function addemployee()
     {
@@ -87,10 +106,7 @@ class employee_controller extends Controller
             'edit_designation_name' => 'required|integer',
            
         ]);
-        // echo'<pre>';
-        // print_r($request->all());
-        // die();
-        
+      
         $Employee = Employee::find($request->emp_id);
 
         if (!$Employee) {

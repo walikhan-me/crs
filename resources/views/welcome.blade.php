@@ -419,7 +419,84 @@
     </li>
 
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav5" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-menu-button-wide"></i><span>ConfrenceRoom Managment</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
 
+        <ul id="components-nav5" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        
+
+            <li>
+                <a class="nav-link collapsed" data-bs-target="#confrenceroom" data-bs-toggle="collapse" href="#confrenceroom">
+                    <i class="bi bi-menu-button-wide"></i><span>Confrence Room</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="confrenceroom" class="nav-content collapse">
+                    <li>
+                        <a href="ConfrenceRoom Managment/Confrence Room/addconfrenceroom">
+                            <i class="bi bi-circle"></i><span>Add Confreneceroom</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="confrenceroom" class="nav-content collapse">
+                    <li>
+                        <a href="ConfrenceRoom Managment/Confrence Room/viewconfrenceroom">
+                            <i class="bi bi-circle"></i><span>View Confreneceroom</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="nav-link collapsed" data-bs-target="#bookedconfrenceroom" data-bs-toggle="collapse" href="#confrenceroom">
+                    <i class="bi bi-menu-button-wide"></i><span>Booked Confrence Room</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="bookedconfrenceroom" class="nav-content collapse">
+                    <li>
+                        <a href="ConfrenceRoom Managment/Booked Confrence Room/bookedconfreneceroom">
+                            <i class="bi bi-circle"></i><span>Booked Confreneceroom</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="bookedconfrenceroom" class="nav-content collapse">
+                    <li>
+                        <a href="ConfrenceRoom Managment/Booked Confrence Room/viewbookedconfrenceroom">
+                            <i class="bi bi-circle"></i><span> View Booked Confreneceroom</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        
+        </ul>
+    </li>
+
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav6" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-menu-button-wide"></i><span>Generate Reports</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <ul id="components-nav6" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        
+
+            <li>
+                <a class="nav-link collapsed" data-bs-target="#generate_report" data-bs-toggle="collapse" href="#fee_report">
+                    <i class="bi bi-menu-button-wide"></i><span>Confrence Room Report</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="generate_report" class="nav-content collapse">
+                    <li>
+                        <a href="Generate Reports/Confrence Room Report/booked_room_report">
+                            <i class="bi bi-circle"></i><span>Booked Room Report</span>
+                        </a>
+                    </li>
+                   
+                
+                
+                </ul>
+            </li>
+        
+        </ul>
+    </li>
 
 
       <!-- End Components Nav -->
@@ -572,9 +649,41 @@
 
   </aside>
   <!-- End Sidebar-->
-
+  
   <!-- End #main -->
   @yield('content')
+  <main id="main" class="main">
+
+<div class="pagetitle">
+  <h1>Upcoming Meeting</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="">Upcoming Meeting</a></li>
+      <!-- <li class="breadcrumb-item">Add Department</li> -->
+      
+    </ol>
+  </nav>
+</div>
+<section class="section">
+<div class="container">
+    <h1>Upcoming Meetings</h1>
+    <div class="row">
+        @foreach($upcomingMeetings as $meeting)
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Confrence Room: {{$meeting->conference_room}}</h5>
+                    <p class="card-text">Date: {{$meeting->start_date}}</p>
+                    <p class="card-text">Time: {{$meeting->start_time}}</p>
+                    <p class="card-text">Meeting Organizer: {{$meeting->username}} </p>
+                    <p class="card-text">Meeting Participant: {{$meeting->participant_names}} </p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+</section>
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">

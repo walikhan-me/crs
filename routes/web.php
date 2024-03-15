@@ -4,10 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\employee_controller;
 use App\Http\Controllers\departmentController;
 use App\Http\Controllers\designationController;
+use App\Http\Controllers\confrenceroomController;
+use App\Http\Controllers\confrenec_room_report_controller;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/',[employee_controller::class,'welcome']);
 // Employee Controller//
 Route::get('/get-designations/{department_id}', [employee_controller::class, 'getDesignations']);
 Route::get('/Employee Management/Add Employees/addemployee', [employee_controller::class, 'addemployee'])->name('addemployee');
@@ -39,3 +43,27 @@ Route::post('/editindesignation', [designationController::class, 'editindesignat
 Route::get('/deletedesignation/{id}', [designationController::class, 'deletedesignation'])->name('deletedesignation');
 // End Designation Controller//
 
+//confrenece room 
+
+Route::get('ConfrenceRoom Managment/Confrence Room/addconfrenceroom', [confrenceroomController::class, 'addconfrenceroom'])->name('addconfrenceroom');
+Route::post('/create_confrenceroom', [confrenceroomController::class, 'create_confrenceroom'])->name('create_confrenceroom');
+Route::get('ConfrenceRoom Managment/Confrence Room/bookconfrenceroom', [confrenceroomController::class, 'bookconfrenceroom'])->name('bookconfrenceroom');
+Route::get('ConfrenceRoom Managment/Confrence Room/viewconfrenceroom', [confrenceroomController::class, 'viewconfrenceroom'])->name('viewconfrenceroom');
+Route::get('ConfrenceRoom Managment/Confrence Room/editconfrenceroom/{id}', [confrenceroomController::class, 'editconfrenceroom'])->name('editconfrenceroom');
+Route::post('/editinconfrenceroom', [confrenceroomController::class, 'editinconfrenceroom'])->name('editinconfrenceroom');
+Route::get('/deleteconfrenceroom/{id}', [confrenceroomController::class, 'deleteconfrenceroom'])->name('deleteconfrenceroom');
+
+Route::get('ConfrenceRoom Managment/Booked Confrence Room/bookedconfreneceroom', [confrenceroomController::class, 'bookedconfreneceroom'])->name('bookedconfreneceroom');
+Route::get('/employee/search', [confrenceroomController::class, 'searchEmployees'])->name('employee.search');
+Route::post('/create_bookedconfrenceroom', [confrenceroomController::class, 'create_bookedconfrenceroom'])->name('create_bookedconfrenceroom');
+Route::get('ConfrenceRoom Managment/Booked Confrence Room/viewbookedconfrenceroom', [confrenceroomController::class, 'viewbookedconfrenceroom'])->name('viewbookedconfrenceroom');
+
+Route::get('ConfrenceRoom Managment/Booked Confrence Room/editbookedconfrenceroom/{id}', [confrenceroomController::class, 'editbookedconfrenceroom'])->name('editbookedconfrenceroom');
+Route::get('/cancelmeeting/{id}', [confrenceroomController::class, 'cancelmeeting'])->name('cancelmeeting');
+//end confrenece room
+
+//confrenece room report controller
+
+Route::get('Generate Reports/Confrence Room Report/booked_room_report', [confrenec_room_report_controller::class, 'booked_room_report'])->name('booked_room_report');
+Route::get('generate-conference-room-report', [confrenec_room_report_controller::class, 'confrenceRoomReport'])->name('generate-conference-room-report');
+Route::get('Generate Reports/Confrence Room Report/conference_room_report', [confrenec_room_report_controller::class, 'conference_room_report'])->name('conference_room_report');

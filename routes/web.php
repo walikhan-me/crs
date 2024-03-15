@@ -12,8 +12,12 @@ Route::get('/', function () {
 Route::get('/get-designations/{department_id}', [employee_controller::class, 'getDesignations']);
 Route::get('/Employee Management/Add Employees/addemployee', [employee_controller::class, 'addemployee'])->name('addemployee');
 Route::post('/create_employee', [employee_controller::class, 'create_employee'])->name('create_employee');
-Route::get('/Employee Management/Add Employees/viewemployee', [employee_controller::class, 'viewemployee']);
+Route::get('/Employee Management/Add Employees/viewemployee', [employee_controller::class, 'viewemployee'])->name('viewemployee');
 Route::get('/Employee Management/Add Employees/editemployee/{id}', [employee_controller::class, 'editemployee'])->name('editemployee');
+Route::post('/editinemployee', [employee_controller::class, 'editinemployee'])->name('editinemployee');
+
+Route::get('/deleteemployee/{id}', [employee_controller::class, 'deleteemployee'])->name('deleteemployee');
+
 // End Employee Controller//
 
 // Department Controller//

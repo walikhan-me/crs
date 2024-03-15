@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('emp_id');
             $table->string('employee_name');
             $table->string('email');
-            $table->string('user_name');
+            $table->string('user_name')->nullable(false);
             $table->string('password');
             $table->string('mobile');
             $table->string('department_id');

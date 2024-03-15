@@ -51,7 +51,7 @@
                                 <td>{{$employee->designation_name}}</td>
                                 <td>
                                     <a href="{{ route('editemployee', ['id' => $employee->emp_id ]) }}"><i class="bi bi-pencil"></i></a>
-                                    <a href="" onclick="confirmDeactivation(event)">
+                                    <a href="{{ route('deleteemployee', ['id' => $employee->emp_id ]) }}" onclick="confirmDeactivation(event)">
                                         <i class="bi bi-trash"></i>
                                     </a>
 

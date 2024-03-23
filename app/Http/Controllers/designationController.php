@@ -11,7 +11,7 @@ class designationController extends Controller
 {
     public function adddesignation(){
         $departments = DB::table('departments')->where('status',1)->get();
-        return view('/Designation Management/Designation/adddesignation', ['departments' => $departments]);
+        return view('Admin//Designation Management/Designation/adddesignation', ['departments' => $departments]);
     }
 
     public function create_designation(Request $request){
@@ -36,12 +36,12 @@ class designationController extends Controller
 
     public function viewdesignation(){
         $designation = Designation::where('status',1)->get();
-        return view('Designation Management/Designation/viewdesignation', ['view_designation' => $designation]);
+        return view('Admin/Designation Management/Designation/viewdesignation', ['view_designation' => $designation]);
         
     }
     public function editdesignation($id){
         $designation = Designation::find($id);
-        return view('Designation Management.Designation.editdesignation', ['edit_designation' => $designation]);
+        return view('Admin/Designation Management.Designation.editdesignation', ['edit_designation' => $designation]);
     }
     public function editindesignation(Request $request){
         $validatedData = $request->validate([

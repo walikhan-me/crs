@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class confrenec_room_report_controller extends Controller
 {
     public function booked_room_report(){
-        return view('Generate Reports/Confrence Room Report/booked_room_report');
+        return view('Admin/Generate Reports/Confrence Room Report/booked_room_report');
     }
     public function conference_room_report(){
-        return view('Generate Reports/Confrence Room Report/conference_room_report');
+        return view('Admin/Generate Reports/Confrence Room Report/conference_room_report');
     }
 
     public function confrenceRoomReport(Request $request){
@@ -27,7 +27,7 @@ class confrenec_room_report_controller extends Controller
             'bookings' => $bookings,
         ];
       
-        $pdf = PDF::loadView('Generate Reports/Confrence Room Report/conference_room_report', $data);
+        $pdf = PDF::loadView('Admin/Generate Reports/Confrence Room Report/conference_room_report', $data);
         
         return $pdf->stream('conference_room_report.pdf');
         

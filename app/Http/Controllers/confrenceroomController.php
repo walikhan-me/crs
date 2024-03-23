@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 class confrenceroomController extends Controller
 {
    public function addconfrenceroom(){
-    return view('/ConfrenceRoom Managment/Confrence Room/addconfrenceroom');
+    return view('Admin/ConfrenceRoom Managment/Confrence Room/addconfrenceroom');
    }
    public function create_confrenceroom(Request $request){
     $validate = $request->validate([
@@ -46,11 +46,11 @@ class confrenceroomController extends Controller
 
    public function viewconfrenceroom(){
     $confrenceroom = confrenceroom::where('status',1)->get();
-    return view('/ConfrenceRoom Managment/Confrence Room/viewconfrenceroom',['confrenceroom_view'=> $confrenceroom]);
+    return view('Admin/ConfrenceRoom Managment/Confrence Room/viewconfrenceroom',['confrenceroom_view'=> $confrenceroom]);
    }
    public function editconfrenceroom($id){
     $confrenceroom = confrenceroom::find($id);
-    return view('/ConfrenceRoom Managment.Confrence Room.editconfrenceroom', ['edit_confrenceroom' => $confrenceroom]);
+    return view('Admin/ConfrenceRoom Managment.Confrence Room.editconfrenceroom', ['edit_confrenceroom' => $confrenceroom]);
 
    }
    public function editinconfrenceroom(Request $request){
@@ -83,7 +83,7 @@ class confrenceroomController extends Controller
    }
    public function bookedconfreneceroom() {
         $conferenceRooms = confrenceroom::all();
-        return view('ConfrenceRoom Managment/Booked Confrence Room/bookedconfreneceroom', compact('conferenceRooms'));
+        return view('Admin/ConfrenceRoom Managment/Booked Confrence Room/bookedconfreneceroom', compact('conferenceRooms'));
     }
    public function searchEmployees(Request $request)
    {
@@ -133,7 +133,7 @@ public function create_bookedconfrenceroom(Request $request)
     
     $bookedConfrenceRoom->status = 'pending';
     $bookedConfrenceRoom->save();
-    
+   
     $selectedEmployeeIds = $request->input('selected_employee_ids');
 
     $validEmails = [];
@@ -145,12 +145,23 @@ public function create_bookedconfrenceroom(Request $request)
         }
     }
 
+
     if (empty($validEmails)) {
         dd("No valid email addresses found.");
     }
-
+   
     $participantEmailsContent = implode(', ', $validEmails);
     $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', config('services.sendinblue.key'));
+  
+
+    $requestHeaders = [
+        'Content-Type' => 'application/json',
+        'api-key' => config('services.sendinblue.key'),
+    ];
+
+    // Log request headers for debugging
+    Log::info('Request Headers: ' . json_encode($requestHeaders));
+
     $apiInstance = new TransactionalEmailsApi(null, $config);
 
     $sendSmtpEmail = new SendSmtpEmail([
@@ -174,7 +185,7 @@ public function create_bookedconfrenceroom(Request $request)
         ',
         'sender' => ['email' => $request->input('user_email'), 'name' => $request->input('username')],
     ]);
-
+  
     try {
     
         $result = $apiInstance->sendTransacEmail($sendSmtpEmail);
@@ -196,7 +207,7 @@ public function create_bookedconfrenceroom(Request $request)
 public function viewbookedconfrenceroom(){
     $bookedconfrenceroom = DB::table('bookedconfrencerooms')->where('status',1)->get();
   
-    return view('ConfrenceRoom Managment/Booked Confrence Room/viewbookedconfrenceroom',['bookedconfrenceroom'=> $bookedconfrenceroom]);
+    return view('Admin/ConfrenceRoom Managment/Booked Confrence Room/viewbookedconfrenceroom',['bookedconfrenceroom'=> $bookedconfrenceroom]);
 }
 
    public function editbookedconfrenceroom($id){

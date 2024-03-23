@@ -11,24 +11,32 @@ use Carbon\Carbon;
 class employee_controller extends Controller
 {
 
-    public function welcome(){
-        $currentDate = date('Y-m-d'); // Get current date in 'Y-m-d' format
-        $currentTime = date('H:i:s'); // Get current time in 'H:i:s' format
-
-        $query = bookedconfrenceroom::where(function ($query) use ($currentDate, $currentTime) {
-            $query->where('end_date', '>', $currentDate)
-                ->orWhere(function ($query) use ($currentDate, $currentTime) {
-                    $query->where('end_date', '=', $currentDate)
-                        ->where('end_time', '>', $currentTime);
-                });
-        });
-              
-            //    die();              
-                                    
-
-    return view('welcome',['upcomingMeetings'=>$query]);
+    // public function welcome(){
+    //     $currentDate = date('Y-m-d'); // Get current date in 'Y-m-d' format
+    //     $currentTime = date('H:i:s'); // Get current time in 'H:i:s' format
         
-    }
+    //     // Debug: Print current date and time
+    //     echo "Current Date: $currentDate, Current Time: $currentTime<br>";
+        
+    //     $data = DB::table('bookedconfrencerooms')
+    //         ->where('end_date', '>', $currentDate)
+    //         ->orWhere(function ($query) use ($currentDate, $currentTime) {
+    //             $query->where('end_date', '=', $currentDate)
+    //                 ->where('end_time', '>', $currentTime);
+    //         })
+    //         ->where('status', 1)
+    //         ->get();
+        
+    //     // Check if there are any upcoming meetings
+    //     if ($data->isEmpty()) {
+    //         $message = "No meetings scheduled yet.";
+    //         return view('welcome', ['message' => $message]);
+    //     }
+        
+    //     return view('welcome', ['upcomingMeetings' => $data]);
+        
+        
+    // }
    
     public function addemployee()
     {
@@ -38,7 +46,7 @@ class employee_controller extends Controller
             ->where('departments.status', 1)
             ->get();
 
-        return view('Employee Management/Add Employees/addemployee',['emp_detail'=>$emp_detail ]);
+        return view('Admin/Employee Management/Add Employees/addemployee',['emp_detail'=>$emp_detail ]);
     }
     public function getDesignations($departmentId)
     {
@@ -86,12 +94,12 @@ class employee_controller extends Controller
         ->select('designations.designation_name', 'departments.department_name', 'employees.employee_name', 'employees.email', 'employees.user_name', 'employees.mobile','employees.emp_id')
         ->where('employees.status',1)
         ->get();
-        return view('/Employee Management/Add Employees/viewemployee',['emplyess_data' =>$employess]);
+        return view('Admin/Employee Management/Add Employees/viewemployee',['emplyess_data' =>$employess]);
     }
     public function editemployee($id){
        
         $Employee = Employee::where('emp_id', $id)->first();
-        return view('Employee Management.Add Employees.editemployee', ['editemployee' => $Employee]);
+        return view('Admin/Employee Management.Add Employees.editemployee', ['editemployee' => $Employee]);
     }
     public function editinemployee(Request $request){
         

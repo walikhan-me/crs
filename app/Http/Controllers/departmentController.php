@@ -9,7 +9,7 @@ class departmentController extends Controller
 {
     
     public function adddepartment(){
-        return view('/Department Management/Departments/adddepartment');
+        return view('Admin/Department Management/Departments/adddepartment');
     }
 
     public function create_department(Request $request){
@@ -26,11 +26,11 @@ class departmentController extends Controller
 
     public function viewdepartment(){
         $departments = Department::where('status',1)->get();
-        return view('Department Management.Departments.viewdepartment', ['view_departments' => $departments]);
+        return view('Admin/Department Management.Departments.viewdepartment', ['view_departments' => $departments]);
     }
     public function editdepartment($id){
         $department = Department::find($id);
-        return view('Department Management.Departments.editdepartment', ['edit_department' => $department]);
+        return view('Admin/Department Management.Departments.editdepartment', ['edit_department' => $department]);
     }
     public function editindepartment(Request $request){
         $validatedData = $request->validate([

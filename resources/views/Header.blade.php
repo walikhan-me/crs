@@ -212,7 +212,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="#" >
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -222,6 +222,10 @@
         </li><!-- End Profile Nav -->
  
       </ul>
+      <form id="logoutForm" method="POST" action="/logout" style="display: none;">
+          @csrf
+          <!-- No need for a visible submit button in this case -->
+      </form>
       @if(session('success'))
               <div class="alert alert-success fields_success_message">
                   {{ session('success') }}
@@ -230,3 +234,4 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
+

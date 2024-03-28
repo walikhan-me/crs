@@ -29,7 +29,7 @@ class adminloginController extends Controller
         if ($user && Hash::check($credentials['password'], $user->admin_password)) {
           
             $request->session()->regenerate();
-            return redirect('Admin/registration');
+            return redirect('/')->with('admin_name', $user->admin_name);;
 
         }
         return back()->with('error', 'Invalid username or password');

@@ -89,7 +89,22 @@
   <!-- End Sidebar-->
   
   <!-- End #main -->
+
+
+
+  @if(Request::is('/'))
+    <h1>asdasdasddddddddddddddddddddddddddddddddddddddd</h1>
+
+    <h1>asdasdasddddddddddddddddddddddddddddddddddddddd</h1>
+
+    <h1>asdasdasddddddddddddddddddddddddddddddddddddddd</h1>
+
+    <h1>asdasdasddddddddddddddddddddddddddddddddddddddd</h1>
+
+    <h1>asdasdasddddddddddddddddddddddddddddddddddddddd</h1>
+  @endif
   @yield('content')
+
 
 
 

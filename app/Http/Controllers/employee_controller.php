@@ -8,35 +8,14 @@ use Illuminate\Support\Facades\DB;
 use App\Models\bookedconfrenceroom;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+
 class employee_controller extends Controller
 {
 
-    // public function welcome(){
-    //     $currentDate = date('Y-m-d'); // Get current date in 'Y-m-d' format
-    //     $currentTime = date('H:i:s'); // Get current time in 'H:i:s' format
-        
-    //     // Debug: Print current date and time
-    //     echo "Current Date: $currentDate, Current Time: $currentTime<br>";
-        
-    //     $data = DB::table('bookedconfrencerooms')
-    //         ->where('end_date', '>', $currentDate)
-    //         ->orWhere(function ($query) use ($currentDate, $currentTime) {
-    //             $query->where('end_date', '=', $currentDate)
-    //                 ->where('end_time', '>', $currentTime);
-    //         })
-    //         ->where('status', 1)
-    //         ->get();
-        
-    //     // Check if there are any upcoming meetings
-    //     if ($data->isEmpty()) {
-    //         $message = "No meetings scheduled yet.";
-    //         return view('welcome', ['message' => $message]);
-    //     }
-        
-    //     return view('welcome', ['upcomingMeetings' => $data]);
-        
-        
-    // }
+    public function welcome()
+    {
+        return view('/');
+    }
    
     public function addemployee()
     {

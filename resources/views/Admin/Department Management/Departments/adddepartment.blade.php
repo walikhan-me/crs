@@ -1,7 +1,7 @@
 @extends('welcome')
 
-
 @section('content')
+
 <main id="main" class="main">
 
 <div class="pagetitle">
@@ -45,6 +45,6 @@
     </div>
   </div>
 
-@endsection
+  @endsection
 
 

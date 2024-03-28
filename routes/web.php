@@ -12,10 +12,17 @@ use App\Http\Controllers\Auth\LoginController;
 // Route::get('/',[employee_controller::class,'welcome']);
 
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('web')->group(function () {
+
+  
+
+    // Route::post('/logout',[Auth\LoginController::class, 'logout'] )->name('logout');
 });
-// Route::get('/',[employee_controller::class,'welcome']);
+
+
+
+
+Route::get('/welcome', [employee_controller::class, 'welcome'])->name('welcome');
 // Employee Controller//
 Route::get('/get-designations/{department_id}', [employee_controller::class, 'getDesignations']);
 Route::get('Admin/Employee Management/Add Employees/addemployee', [employee_controller::class, 'addemployee'])->name('addemployee');

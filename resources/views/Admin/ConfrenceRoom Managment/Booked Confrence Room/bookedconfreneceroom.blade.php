@@ -31,7 +31,17 @@
                   
                 <form id="participants-form" class="row g-3" enctype="multipart/form-data" method="POST" action="/create_bookedconfrenceroom">
                     @csrf
-                  
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
                     <div class="col-8">
                         <label for="conference_room" class="form-label">Meeting Participants</label>
                         <ul id="employee_results"></ul>

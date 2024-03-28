@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Notifications\BookingCreatedNotification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http; 
 
 
 
@@ -100,10 +101,113 @@ class confrenceroomController extends Controller
 
 
 
+// public function create_bookedconfrenceroom(Request $request)
+// {
+    
+//    $validate =  $request->validate([
+//         'username' => 'required|string',
+//         'user_id' => 'required|string',
+//         'user_email' => 'required|email',
+//         'conference_room' => 'required',
+//         'start_date' => 'required|date',
+//         'end_date' => 'required|date|after:start_date',
+//         'start_time' => 'required',
+//         'end_time' => 'required|after:start_time',
+//         'selected_employee_ids' => 'required|array|min:1',
+//         'selected_employee_names' => 'required|array|min:1',
+//     ]);
+   
+//     $bookedConfrenceRoom = new bookedconfrenceroom();
+//     $participantEmails = $request->input('selected_employee_emails');
+//     $participantNames = $request->input('selected_employee_names');
+//     // Assign form data to the model attributes
+//     $bookedConfrenceRoom->username = $request->input('username');
+//     $bookedConfrenceRoom->user_id = $request->input('user_id');
+//     $bookedConfrenceRoom->user_email = $request->input('user_email');
+//     $bookedConfrenceRoom->conference_room = $request->input('conference_room');
+//     $bookedConfrenceRoom->start_date = $request->input('start_date');
+//     $bookedConfrenceRoom->end_date = $request->input('end_date');
+//     $bookedConfrenceRoom->start_time = $request->input('start_time');
+//     $bookedConfrenceRoom->end_time = $request->input('end_time');
+//     $bookedConfrenceRoom->participant_emails = json_encode($participantEmails); // Convert to JSON
+//     $bookedConfrenceRoom->participant_names = json_encode($participantNames);
+    
+//     $bookedConfrenceRoom->status = 'pending';
+//     $bookedConfrenceRoom->save();
+   
+//     $selectedEmployeeIds = $request->input('selected_employee_ids');
+
+//     $validEmails = [];
+//     foreach ($selectedEmployeeIds as $email) {
+//         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//             $validEmails[] = $email;
+//         } else {
+//             Log::error("Invalid email address: $email");
+//         }
+//     }
+
+
+//     if (empty($validEmails)) {
+//         dd("No valid email addresses found.");
+//     }
+   
+//     $participantEmailsContent = implode(', ', $validEmails);
+//     $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', config('services.sendinblue.key'));
+  
+
+//     $requestHeaders = [
+//         'Content-Type' => 'application/json',
+//         'api-key' => config('services.sendinblue.key'),
+//     ];
+
+//     // Log request headers for debugging
+//     Log::info('Request Headers: ' . json_encode($requestHeaders));
+
+//     $apiInstance = new TransactionalEmailsApi(null, $config);
+
+//     $sendSmtpEmail = new SendSmtpEmail([
+//         'to' => array_map(fn($email) => ['email' => $email], $validEmails),
+//         'subject' => 'Scheduled Conference Room Meeting',
+//         'htmlContent' => '
+//             <p>Dear '. implode(', ', $participantNames) .' </p>
+            
+//             <p>We are pleased to inform you that a conference room meeting has been scheduled:</p>
+
+//             <p><strong>Conference Room:</strong> ' . $request->input('conference_room') . '</p>
+//             <p><strong>Meeting Time:</strong> ' . $request->input('start_time') . ' to ' . $request->input('end_time') . '</p>
+//             <p><strong>Meeting Date:</strong> ' . $request->input('start_date') . ' to ' . $request->input('end_date') . '</p>
+
+//             <p>Please make a note of the details, and ensure your availability for the scheduled meeting.</p>
+
+//             <p>Thank you for your cooperation. If you have any questions or concerns, feel free to contact us.</p>
+
+//             <p>Best regards,<br>
+//             EOBI Soft</p>
+//         ',
+//         'sender' => ['email' => $request->input('user_email'), 'name' => $request->input('username')],
+//     ]);
+  
+//     try {
+    
+//         $result = $apiInstance->sendTransacEmail($sendSmtpEmail);
+        
+//         if ($result) {
+//             $bookedConfrenceRoom->save();
+//             return redirect()->back()->with('success', 'Email sent successfully!');
+//         } else {
+//             return redirect()->back()->with('error', 'Failed to send email. Please try again.');
+//         }
+       
+//     } catch (Exception $e) {
+      
+//         dd($e->getMessage());
+//     }
+// }
+
+
 public function create_bookedconfrenceroom(Request $request)
 {
-    
-   $validate =  $request->validate([
+    $validate = $request->validate([
         'username' => 'required|string',
         'user_id' => 'required|string',
         'user_email' => 'required|email',
@@ -145,61 +249,34 @@ public function create_bookedconfrenceroom(Request $request)
         }
     }
 
-
     if (empty($validEmails)) {
-        dd("No valid email addresses found.");
+        
+        return redirect()->back()->with('error', 'No valid email addresses found.');
     }
    
     $participantEmailsContent = implode(', ', $validEmails);
-    $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', config('services.sendinblue.key'));
-  
 
-    $requestHeaders = [
-        'Content-Type' => 'application/json',
-        'api-key' => config('services.sendinblue.key'),
-    ];
-
-    // Log request headers for debugging
-    Log::info('Request Headers: ' . json_encode($requestHeaders));
-
-    $apiInstance = new TransactionalEmailsApi(null, $config);
-
-    $sendSmtpEmail = new SendSmtpEmail([
-        'to' => array_map(fn($email) => ['email' => $email], $validEmails),
-        'subject' => 'Scheduled Conference Room Meeting',
-        'htmlContent' => '
-            <p>Dear '. implode(', ', $participantNames) .' </p>
-            
-            <p>We are pleased to inform you that a conference room meeting has been scheduled:</p>
-
-            <p><strong>Conference Room:</strong> ' . $request->input('conference_room') . '</p>
-            <p><strong>Meeting Time:</strong> ' . $request->input('start_time') . ' to ' . $request->input('end_time') . '</p>
-            <p><strong>Meeting Date:</strong> ' . $request->input('start_date') . ' to ' . $request->input('end_date') . '</p>
-
-            <p>Please make a note of the details, and ensure your availability for the scheduled meeting.</p>
-
-            <p>Thank you for your cooperation. If you have any questions or concerns, feel free to contact us.</p>
-
-            <p>Best regards,<br>
-            EOBI Soft</p>
-        ',
-        'sender' => ['email' => $request->input('user_email'), 'name' => $request->input('username')],
-    ]);
-  
-    try {
+    // Make HTTP POST request to the Brevo API endpoint
+    $response = Http::withHeaders([
+            'accept' => 'application/json',
+            'api-key' => config('services.sendinblue.key'),
+            'content-type' => 'application/json'
+        ])
+        ->post('https://api.brevo.com/v3/smtp/email', [
+            'sender' => [
+                'name' => $request->input('username'),
+                'email' => $request->input('user_email')
+            ],
+            'to' => array_map(fn($email) => ['email' => $email], $validEmails),
+            'subject' => 'Scheduled Conference Room Meeting',
+            'htmlContent' => '<p>Dear '. implode(', ', $participantNames) .' </p><p>We are pleased to inform you that a conference room meeting has been scheduled:</p><p><strong>Conference Room:</strong> ' . $request->input('conference_room') . '</p><p><strong>Meeting Time:</strong> ' . $request->input('start_time') . ' to ' . $request->input('end_time') . '</p><p><strong>Meeting Date:</strong> ' . $request->input('start_date') . ' to ' . $request->input('end_date') . '</p><p>Please make a note of the details, and ensure your availability for the scheduled meeting.</p><p>Thank you for your cooperation. If you have any questions or concerns, feel free to contact us.</p><p>Best regards,<br>EOBI Soft</p>'
+        ]);
     
-        $result = $apiInstance->sendTransacEmail($sendSmtpEmail);
-        
-        if ($result) {
-            $bookedConfrenceRoom->save();
-            return redirect()->back()->with('success', 'Email sent successfully!');
-        } else {
-            return redirect()->back()->with('error', 'Failed to send email. Please try again.');
-        }
-       
-    } catch (Exception $e) {
-      
-        dd($e->getMessage());
+    if ($response->successful()) {
+        $bookedConfrenceRoom->save();
+        return redirect()->back()->with('success', 'Email sent successfully!');
+    } else {
+        return redirect()->back()->with('error', 'Failed to send email. Please try again.');
     }
 }
 
